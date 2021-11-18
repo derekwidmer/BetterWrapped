@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "com.betterwrapped",
     "name": "BetterWrapped",
     "slug": "BetterWrapped",
     "version": "1.0.0",

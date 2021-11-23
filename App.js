@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomePage from './components/homePage';
 
 const query = require('query-string')
 
@@ -96,11 +97,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{
+        headerShown: false
+      }}>
         {/* <View style={styles.container}>
           <StatusBar style="light" />
           <SignIn onPress={getCode} />
         </View> */}
+        <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Sign In" component={SignIn} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -112,5 +116,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#111'
   }
 });

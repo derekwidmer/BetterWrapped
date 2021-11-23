@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import SignIn from './components/signIn';
 import axios from 'axios';
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const query = require('query-string')
 
@@ -20,6 +22,7 @@ export default function App() {
   const [accessToken, setAccessToken] = useState("")
   const [refreshToken, setRefreshToken] = useState("")
 
+  const Stack = createNativeStackNavigator()
 
 
   // from AuthSession documentation Spotify example
@@ -92,10 +95,15 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <SignIn onPress={getCode} />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* <View style={styles.container}>
+          <StatusBar style="light" />
+          <SignIn onPress={getCode} />
+        </View> */}
+        <Stack.Screen name="Sign In" component={SignIn} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

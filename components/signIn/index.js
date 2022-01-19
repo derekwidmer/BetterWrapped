@@ -5,8 +5,9 @@ import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTokens } from '../../redux/tokenSlice';
+import { StatusBar } from 'expo-status-bar';
 
-export default function SignIn(props) {
+export default function SignIn({ navigation }) {
 
 	const tokens = useSelector(state => state.token);
 	const dispatch = useDispatch();
@@ -59,6 +60,12 @@ export default function SignIn(props) {
 			redirect_uri: request.redirectUri
 		}
 		dispatch(fetchTokens(body))
+			.then(() => {
+				if (tokens.access_token) {
+					navigation.navigate('Home')
+				}
+			})
+
 	}
 
 	const getRefreshedToken = async () => {
@@ -77,8 +84,11 @@ export default function SignIn(props) {
 			.catch(e => { console.log(e) })
 	}
 
+	console.log("Tokens:", tokens)
+
 	return (
 		<View style={styles.container}>
+			<StatusBar style="light" />
 			<Text style={styles.title}>Welcome to BetterWrapped.</Text>
 			<Text style={{ color: "white" }}>Token: {tokens.status}</Text>
 			<Pressable style={styles.signIn} onPress={getCode}>

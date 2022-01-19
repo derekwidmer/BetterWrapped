@@ -4,15 +4,15 @@ import axios from "axios";
 
 export const fetchTokens = createAsyncThunk(
 	'tokens/fetchTokens',
-	async (body) => {
-		console.log('Calling function fetchTokens. Body:', body)
-		axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
+	async (body, thunkAPI) => {
+		return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
 			.then(res => {
-				console.log('Data status:\n', res.status)
+				console.log('Res.data:', res.data)
 				return res.data
 			})
 			.catch(e => console.log('Error:\n', e))
-	});
+	}
+);
 
 const tokenSlice = createSlice({
 	name: 'token',
@@ -24,10 +24,10 @@ const tokenSlice = createSlice({
 		status: 'idle'
 	},
 	reducers: {
-		setTokens(state, action) {
-			console.log("Setting tokens", action.payload)
-			state.access_token = action.meta.arg.access_token
-			state.refresh_token = action.meta.arg.refresh_token
+		setTokens(state, payload) {
+			console.log("Action object", payload)
+			state.access_token = payload.access_token
+			state.refresh_token = payload.refresh_token
 		},
 	},
 	extraReducers: builder => {
@@ -36,7 +36,7 @@ const tokenSlice = createSlice({
 		})
 		builder.addCase(fetchTokens.fulfilled, (state, action) => {
 			state.status = 'success'
-			tokenSlice.caseReducers.setTokens(state, action)
+			tokenSlice.caseReducers.setTokens(state, action.payload)
 		})
 		builder.addCase(fetchTokens.rejected, (state, action) => {
 			state.status = 'failed'

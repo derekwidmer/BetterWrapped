@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import SignIn from './components/signIn';
@@ -22,15 +21,8 @@ export default function App() {
         <Stack.Navigator screenOptions={{
           headerShown: false
         }}>
-          {/* <View style={styles.container}>
-          <StatusBar style="light" />
-          <SignIn onPress={getCode} />
-        </View> */}
-          {/* <Stack.Screen name="Home" component={HomePage} /> */}
           <Stack.Screen name="Sign In" component={SignIn} />
-          {/* <Stack.Screen name="Sign In">
-          {props => <SignIn onPress={getCode} />}
-        </Stack.Screen> */}
+          <Stack.Screen name="Home" component={HomePage} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

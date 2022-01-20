@@ -7,7 +7,6 @@ export const fetchTokens = createAsyncThunk(
 	async (body, thunkAPI) => {
 		return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
 			.then(res => {
-				console.log('Res.data:', res.data)
 				return res.data
 			})
 			.catch(e => console.log('Error:\n', e))
@@ -25,7 +24,6 @@ const tokenSlice = createSlice({
 	},
 	reducers: {
 		setTokens(state, payload) {
-			console.log("Action object", payload)
 			state.access_token = payload.access_token
 			state.refresh_token = payload.refresh_token
 		},

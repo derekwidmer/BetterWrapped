@@ -60,12 +60,7 @@ export default function SignIn({ navigation }) {
 			redirect_uri: request.redirectUri
 		}
 		dispatch(fetchTokens(body))
-			.then(() => {
-				if (tokens.access_token) {
-					navigation.navigate('Home')
-				}
-			})
-
+		navigation.navigate('Home')
 	}
 
 	const getRefreshedToken = async () => {
@@ -83,8 +78,6 @@ export default function SignIn({ navigation }) {
 			})
 			.catch(e => { console.log(e) })
 	}
-
-	console.log("Tokens:", tokens)
 
 	return (
 		<View style={styles.container}>

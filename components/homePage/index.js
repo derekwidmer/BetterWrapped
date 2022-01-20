@@ -1,38 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import styles from './styles'
 import StatSection from '../statSection';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserData } from '../../redux/userDataSlice'
 
 export default function HomePage() {
 
-	// const [userData, setUserData] = useState({});
-	const tokens = useSelector(state => state.token);
+	const tokens = useSelector(state => state.token)
+	const userData = useSelector(state => state.user)
+	const dispatch = useDispatch()
 
-	// useEffect(() => {
+	useEffect(() => {
+		axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + tokens.access_token } })
+			.then(res => dispatch(setUserData(res.data)))
+			.catch(e => console.log('Error:', e))
+	}, [])
 
-	// }, [])
+	console.log(userData.images[0].url)
 
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.innerContainer}>
 				<StatusBar style="light" />
-				<Text style={styles.title}>Hi, User</Text>
-				<Text style={styles.subtitle}>Stat Views</Text>
-				<View style={styles.statViewsContainer}>
+				<Text style={styles.title}>Hi, {userData.display_name}</Text>
+				{/* <Text style={styles.subtitle}>Stat Views</Text> */}
+				{/* <View style={styles.statViewsContainer}>
 					<View style={styles.statView}></View>
 					<View style={styles.statView}></View>
-				</View>
+				</View> */}
 				<Text style={styles.subtitle}>Explore Your Activity</Text>
 				<View style={styles.profileContainer}>
-					<View style={styles.profilePicture} />
-					<Text style={styles.username}>Username</Text>
+					<Image
+						style={styles.profilePicture}
+						source={{ uri: userData.images[0].url }}
+					/>
+					<Text style={styles.username}>{userData.id}</Text>
 				</View>
 				<View style={styles.followers}>
-					<Text style={styles.followerText}><Text style={styles.followerNumber}>5</Text> followers</Text>
-					<Text style={styles.followerText}><Text style={styles.followerNumber}>20</Text> following</Text>
+					<Text style={styles.followerText}><Text style={styles.followerNumber}>{userData.followers.total}</Text> followers</Text>
+					<Text style={styles.followerText}><Text style={styles.followerNumber}>{ }</Text> following</Text>
 				</View>
 				<View style={styles.divider} />
 				<StatSection statNum={40} statDesc={"Hours spent listening this month"} />

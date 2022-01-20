@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import styles from './styles'
 import StatSection from '../statSection';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 export default function HomePage() {
+
+	// const [userData, setUserData] = useState({});
+	const tokens = useSelector(state => state.token);
+
+	// useEffect(() => {
+
+	// }, [])
+
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.innerContainer}>

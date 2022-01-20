@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Pressable } from 'react-native'
 import styles from './styles'
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
@@ -53,14 +53,12 @@ export default function SignIn({ navigation }) {
 	}
 
 	const getTokens = async (code, codeVerifier) => {
-
 		const body = {
 			code: code,
 			code_verifier: codeVerifier,
 			redirect_uri: request.redirectUri
 		}
 		dispatch(fetchTokens(body))
-		navigation.navigate('Home')
 	}
 
 	const getRefreshedToken = async () => {

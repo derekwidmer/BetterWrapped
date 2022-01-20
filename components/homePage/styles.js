@@ -35,9 +35,12 @@ const styles = StyleSheet.create({
 	},
 	profileContainer: {
 		flexDirection: "row",
-		justifyContent: "center",
+		// justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 20
+		marginBottom: 20,
+		padding: 15,
+		// backgroundColor: "rgba(255,255,255,.05)",
+		borderRadius: 10
 	},
 	profilePicture: {
 		width: 50,
@@ -45,11 +48,16 @@ const styles = StyleSheet.create({
 		borderRadius: 100,
 		backgroundColor: "red"
 	},
+	imageBorder: {
+		backgroundColor: "white",
+		padding: 2,
+		borderRadius: 100
+	},
 	username: {
 		color: "white",
 		fontSize: 25,
 		textTransform: "lowercase",
-		marginLeft: 10,
+		marginLeft: 15,
 		fontWeight: "700"
 	},
 	divider: {
@@ -59,19 +67,19 @@ const styles = StyleSheet.create({
 	},
 	followers: {
 		flexDirection: "row",
-		justifyContent: "space-between",
+		// justifyContent: "space-between",
 		alignItems: "center",
 		width: "100%",
-		paddingHorizontal: 30
+		paddingHorizontal: 15
 	},
 	followerText: {
 		color: "white",
 		fontWeight: "500",
-		fontSize: 20,
+		fontSize: 17,
 	},
 	followerNumber: {
 		fontWeight: "700",
-		fontSize: 25,
+		fontSize: 17,
 	}
 })
 

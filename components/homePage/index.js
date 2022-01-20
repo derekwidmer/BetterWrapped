@@ -19,8 +19,6 @@ export default function HomePage() {
 			.catch(e => console.log('Error:', e))
 	}, [])
 
-	console.log(userData.images[0].url)
-
 	return (
 		<View style={styles.container}>
 			<SafeAreaView style={styles.innerContainer}>
@@ -33,16 +31,17 @@ export default function HomePage() {
 				</View> */}
 				<Text style={styles.subtitle}>Explore Your Activity</Text>
 				<View style={styles.profileContainer}>
-					<Image
-						style={styles.profilePicture}
-						source={{ uri: userData.images[0].url }}
-					/>
+					<View style={styles.imageBorder}>
+						<Image
+							style={styles.profilePicture}
+							source={{ uri: userData.images[0].url }}
+						/>
+					</View>
 					<Text style={styles.username}>{userData.id}</Text>
 				</View>
-				<View style={styles.followers}>
+				{/* <View style={styles.followers}>
 					<Text style={styles.followerText}><Text style={styles.followerNumber}>{userData.followers.total}</Text> followers</Text>
-					<Text style={styles.followerText}><Text style={styles.followerNumber}>{ }</Text> following</Text>
-				</View>
+				</View> */}
 				<View style={styles.divider} />
 				<StatSection statNum={40} statDesc={"Hours spent listening this month"} />
 				<View style={styles.divider} />

@@ -5,10 +5,8 @@ import axios from "axios";
 export const fetchUserData = createAsyncThunk(
 	'userData/fetchUserData',
 	async (token, thunkAPI) => {
-		console.log('Sending request with access token: ', token)
 		return axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + token } })
 			.then(res => {
-				console.log(res.data)
 				return (res.data)
 			})
 			.catch(e => console.log('Error:', e))

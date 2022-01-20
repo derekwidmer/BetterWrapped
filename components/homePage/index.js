@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, SafeAreaView, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import styles from './styles'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, Text, Pressable } from 'react-native'
 import styles from './styles'
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTokens } from '../../redux/tokenSlice';
 import { StatusBar } from 'expo-status-bar';
-import { fetchUserData } from '../../redux/userDataSlice';
 
 export default function SignIn({ navigation }) {
 

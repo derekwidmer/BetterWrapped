@@ -2,6 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
 
+export const fetchUserData = createAsyncThunk(
+	'userData/fetchUserData',
+	async (token, thunkAPI) => {
+		console.log('Sending request with access token: ', token)
+		return axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + token } })
+			.then(res => {
+				console.log(res.data)
+				return (res.data)
+			})
+			.catch(e => console.log('Error:', e))
+	}
+)
+
 const userDataSlice = createSlice({
 	name: 'userData',
 	initialState: {
@@ -22,9 +35,11 @@ const userDataSlice = createSlice({
 		],
 		type: "user",
 		uri: "",
+		status: "idle"
 	},
 	reducers: {
 		setUserData(state, { payload }) {
+			console.log('Setting user data to', payload)
 			state.display_name = payload.display_name
 			state.external_urls = payload.external_urls
 			state.followers = payload.followers
@@ -34,6 +49,18 @@ const userDataSlice = createSlice({
 			state.type = payload.type
 			state.uri = payload.uri
 		}
+	},
+	extraReducers: builder => {
+		builder.addCase(fetchUserData.pending, (state, action) => {
+			state.status = "loading"
+		})
+		builder.addCase(fetchUserData.rejected, (state, action) => {
+			state.status = "failed"
+		})
+		builder.addCase(fetchUserData.fulfilled, (state, action) => {
+			state.status = "success"
+			userDataSlice.caseReducers.setUserData(state, action)
+		})
 	}
 })
 

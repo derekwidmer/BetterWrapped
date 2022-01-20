@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTokens } from '../../redux/tokenSlice';
 import { StatusBar } from 'expo-status-bar';
+import { fetchUserData } from '../../redux/userDataSlice';
 
 export default function SignIn({ navigation }) {
 
@@ -81,7 +82,7 @@ export default function SignIn({ navigation }) {
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<Text style={styles.title}>Welcome to BetterWrapped.</Text>
-			<Text style={{ color: "white" }}>Token: {tokens.status}</Text>
+			{/* <Text style={{ color: "white" }}>Token: {tokens.status}</Text> */}
 			<Pressable style={styles.signIn} onPress={getCode}>
 				<Text style={styles.buttonText}>Sign in with Spotify</Text>
 			</Pressable>

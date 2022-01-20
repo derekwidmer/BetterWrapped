@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const fetchTokens = createAsyncThunk(
 	'tokens/fetchTokens',
-	async (body, thunkAPI) => {
+	async (body) => {
 		return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
 			.then(res => {
 				return res.data

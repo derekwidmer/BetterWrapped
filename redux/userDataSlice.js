@@ -7,6 +7,7 @@ export const fetchUserData = createAsyncThunk(
 	async (token, thunkAPI) => {
 		return axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + token } })
 			.then(res => {
+				console.log('Fetched user data', res.data)
 				return (res.data)
 			})
 			.catch(e => console.log('Error:', e))
@@ -37,7 +38,7 @@ const userDataSlice = createSlice({
 	},
 	reducers: {
 		setUserData(state, { payload }) {
-			console.log('Setting user data to', payload)
+			// console.log('Setting user data to', payload)
 			state.display_name = payload.display_name
 			state.external_urls = payload.external_urls
 			state.followers = payload.followers

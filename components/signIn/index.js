@@ -61,27 +61,10 @@ export default function SignIn({ navigation }) {
 		dispatch(fetchTokens(body))
 	}
 
-	const getRefreshedToken = async () => {
-
-		const body = {
-			refresh_token: refreshToken
-		}
-
-		axios.get('http://localhost:5001/betterwrapped/us-central1/app/getRefreshedToken', { params: body })
-			.then(res => {
-				const { access_token, refresh_token, expires_in } = res.data;
-				setAccessToken(access_token);
-				setRefreshToken(refresh_token);
-				console.log('Got new access token: ', access_token)
-			})
-			.catch(e => { console.log(e) })
-	}
-
 	return (
 		<View style={styles.container}>
 			<StatusBar style="light" />
 			<Text style={styles.title}>Welcome to BetterWrapped.</Text>
-			{/* <Text style={{ color: "white" }}>Token: {tokens.status}</Text> */}
 			<Pressable style={styles.signIn} onPress={getCode}>
 				<Text style={styles.buttonText}>Sign in with Spotify</Text>
 			</Pressable>

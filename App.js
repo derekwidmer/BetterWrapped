@@ -6,17 +6,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
+import * as SecureStore from 'expo-secure-store';
+import { fetchTokens } from './redux/tokenSlice';
 
 export default function App() {
 
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-  store.subscribe(() => {
-    const tokens = (store.getState('token'))
-    if (tokens.token.access_token != null) {
+  useEffect(async () => {
+    const refresh_token = await SecureStore.getItemAsync('refresh_token')
+    if (refresh_token) {
+      fetchTokens({})
       setIsSignedIn(true)
     }
-  })
+  }, [])
 
   const Stack = createNativeStackNavigator()
   const authFlow =

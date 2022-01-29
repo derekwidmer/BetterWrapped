@@ -1,15 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
+import * as SecureStore from 'expo-secure-store';
+
+async function save(key, value) {
+	await SecureStore.setItemAsync(key, value);
+}
 
 export const fetchTokens = createAsyncThunk(
 	'tokens/fetchTokens',
 	async (body) => {
-		return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
-			.then(res => {
-				return res.data
-			})
-			.catch(e => console.log('Error:\n', e))
+		const refresh_token = await SecureStore.getItemAsync('refresh_token')
+		console.log('Refresh token?', refresh_token)
+		if (refresh_token) {
+			return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getRefreshedTokens', { params: { refresh_token } })
+				.then(res => {
+					console.log('Fetching tokens....\nReturned:\n', res.data)
+					return res.data;
+				})
+				.catch(e => console.log('Error Refreshing Token:\n', e))
+		} else {
+			return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
+				.then(res => {
+					return res.data
+				})
+				.catch(e => console.log('Error getting inital tokens:\n', e))
+		}
 	}
 );
 
@@ -26,6 +42,7 @@ const tokenSlice = createSlice({
 		setTokens(state, payload) {
 			state.access_token = payload.access_token
 			state.refresh_token = payload.refresh_token
+			save('refresh_token', payload.refresh_token)
 		},
 	},
 	extraReducers: builder => {

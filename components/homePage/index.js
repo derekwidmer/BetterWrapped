@@ -5,16 +5,23 @@ import styles from './styles'
 import StatSection from '../statSection';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../../redux/userDataSlice'
+import { fetchTokens } from '../../redux/tokenSlice';
 
 export default function HomePage() {
 
-	const tokens = useSelector(state => state.token)
 	const userData = useSelector(state => state.user)
+	const tokens = useSelector(state => state.token)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(fetchUserData(tokens.access_token))
+		dispatch(fetchTokens())
 	}, [])
+
+	useEffect(() => {
+		if(tokens.access_token) {
+			dispatch(fetchUserData(tokens.access_token));
+		}
+	}, [tokens])
 
 	return (
 		<>
@@ -28,11 +35,6 @@ export default function HomePage() {
 					<SafeAreaView style={styles.innerContainer}>
 						<StatusBar style="light" />
 						<Text style={styles.title}>Hi, {userData.display_name}</Text>
-						{/* <Text style={styles.subtitle}>Stat Views</Text> */}
-						{/* <View style={styles.statViewsContainer}>
-					<View style={styles.statView}></View>
-					<View style={styles.statView}></View>
-				</View> */}
 						<Text style={styles.subtitle}>Explore Your Activity</Text>
 						<View style={styles.profileContainer}>
 							<View style={styles.imageBorder}>
@@ -46,9 +48,6 @@ export default function HomePage() {
 							</View>
 							<Text style={styles.username}>{userData.id}</Text>
 						</View>
-						{/* <View style={styles.followers}>
-					<Text style={styles.followerText}><Text style={styles.followerNumber}>{userData.followers.total}</Text> followers</Text>
-				</View> */}
 						<View style={styles.divider} />
 						<StatSection statNum={40} statDesc={"Hours spent listening this month"} />
 						<View style={styles.divider} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import SignIn from './components/signIn';
-import HomePage from './components/homePage';
+import SignIn from './components/signIn/SignIn';
+import HomePage from './components/homePage/HomePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { View, Text, SafeAreaView, Image } from 'react-native'
+import { ScrollView, View, Text, SafeAreaView, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import styles from './styles'
-import StatSection from '../statSection';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUserData } from '../../redux/userDataSlice'
 import { fetchTokens } from '../../redux/tokenSlice';
+import ArtistWidget from './ArtistWidget';
 
 export default function HomePage() {
 
@@ -48,10 +48,14 @@ export default function HomePage() {
 							</View>
 							<Text style={styles.username}>{userData.id}</Text>
 						</View>
-						<View style={styles.divider} />
-						<StatSection statNum={40} statDesc={"Hours spent listening this month"} />
-						<View style={styles.divider} />
-						<StatSection statNum={10} statDesc={"Hours spent listening to Bad Bunny this week"} />
+						{/* <View style={styles.divider} /> */}
+						<Text style={styles.title}>Your Top Artists</Text>
+						<ScrollView horizontal style={styles.artists}>
+							<ArtistWidget />
+							<ArtistWidget />
+							<ArtistWidget />
+						</ScrollView>
+						{/* <View style={styles.divider} /> */}
 					</SafeAreaView>
 				</View>
 			}

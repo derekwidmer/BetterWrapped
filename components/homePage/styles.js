@@ -77,6 +77,11 @@ const styles = StyleSheet.create({
 	followerNumber: {
 		fontWeight: "700",
 		fontSize: 17,
+	},
+	artists: {
+		display: "flex",
+		flexDirection: "row",
+		paddingVertical: 15
 	}
 })
 

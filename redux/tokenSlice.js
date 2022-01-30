@@ -10,22 +10,25 @@ async function save(key, value) {
 export const fetchTokens = createAsyncThunk(
 	'tokens/fetchTokens',
 	async (body) => {
-		const refresh_token = await SecureStore.getItemAsync('refresh_token')
-		console.log('Refresh token?', refresh_token)
-		if (refresh_token) {
-			return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getRefreshedTokens', { params: { refresh_token } })
-				.then(res => {
-					console.log('Fetching tokens....')
-					return res.data;
-				})
-				.catch(e => console.log('Error Refreshing Token:\n', e))
-		} else {
-			return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
-				.then(res => {
-					return res.data
-				})
-				.catch(e => console.log('Error getting inital tokens:\n', e))
+		try {
+			const refresh_token = await SecureStore.getItemAsync('refresh_token')
+			console.log('Refresh token fetched from SecureStore...')
+			if (refresh_token) {
+				return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getRefreshedTokens', { params: { refresh_token } })
+					.then(res => {
+						console.log('Fetching tokens....')
+						return res.data;
+					})
+					.catch(e => console.log('Error Refreshing Token:\n', e))
+			}
+		} catch (e) {
+			console.log('Error fetching refresh_token from SecureStore:', e)
 		}
+		return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getTokens', { params: body })
+			.then(res => {
+				return res.data
+			})
+			.catch(e => console.log('Error getting inital tokens:\n', e))
 	}
 );
 

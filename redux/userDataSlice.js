@@ -10,10 +10,15 @@ async function saveAsyncStorage(key, value) {
 export const fetchUserData = createAsyncThunk(
 	'userData/fetchUserData',
 	async (token, thunkAPI) => {
-		const userData = await AsyncStorage.getItem('userData');
-		if (userData) {
-			console.log('Returning userData from storage...');
-			return (JSON.parse(userData));
+		try {
+			const userData = await AsyncStorage.getItem('userData');
+			if (userData) {
+				console.log('Returning userData from storage...');
+				return (JSON.parse(userData));
+			}
+		}
+		catch (e) {
+			console.log('Error fetching userData from asyncStorage:', e)
 		}
 		return axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + token } })
 			.then(res => {

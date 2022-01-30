@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 	subtitle: {
 		marginVertical: 20,
 		color: "white",
-		fontSize: 25,
+		fontSize: 22,
 		fontWeight: "500",
 	},
 	statViewsContainer: {
@@ -35,11 +35,8 @@ const styles = StyleSheet.create({
 	},
 	profileContainer: {
 		flexDirection: "row",
-		// justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 20,
 		padding: 15,
-		// backgroundColor: "rgba(255,255,255,.05)",
 		borderRadius: 10
 	},
 	profilePicture: {

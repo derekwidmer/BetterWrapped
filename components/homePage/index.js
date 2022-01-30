@@ -18,7 +18,7 @@ export default function HomePage() {
 	}, [])
 
 	useEffect(() => {
-		if(tokens.access_token) {
+		if (tokens.access_token) {
 			dispatch(fetchUserData(tokens.access_token));
 		}
 	}, [tokens])

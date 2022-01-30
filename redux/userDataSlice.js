@@ -1,13 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+async function saveAsyncStorage(key, value) {
+	await AsyncStorage.setItem(key, value);
+}
 
 export const fetchUserData = createAsyncThunk(
 	'userData/fetchUserData',
 	async (token, thunkAPI) => {
+		const userData = await AsyncStorage.getItem('userData');
+		if (userData) {
+			console.log('Returning userData from storage...');
+			return (JSON.parse(userData));
+		}
 		return axios.get('https://api.spotify.com/v1/me', { headers: { 'Authorization': 'Bearer ' + token } })
 			.then(res => {
-				console.log('Fetched user data', res.data)
+				console.log('Fetched user data')
 				return (res.data)
 			})
 			.catch(e => console.log('Error:', e))
@@ -38,7 +48,7 @@ const userDataSlice = createSlice({
 	},
 	reducers: {
 		setUserData(state, { payload }) {
-			// console.log('Setting user data to', payload)
+			saveAsyncStorage('userData', JSON.stringify(payload));
 			state.display_name = payload.display_name
 			state.external_urls = payload.external_urls
 			state.followers = payload.followers

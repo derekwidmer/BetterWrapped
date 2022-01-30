@@ -15,7 +15,7 @@ export const fetchTokens = createAsyncThunk(
 		if (refresh_token) {
 			return axios.get('http://localhost:5001/betterwrapped/us-central1/app/getRefreshedTokens', { params: { refresh_token } })
 				.then(res => {
-					console.log('Fetching tokens....\nReturned:\n', res.data)
+					console.log('Fetching tokens....')
 					return res.data;
 				})
 				.catch(e => console.log('Error Refreshing Token:\n', e))
